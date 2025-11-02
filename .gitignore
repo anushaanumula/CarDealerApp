@@ -1,0 +1,32 @@
+# Build outputs
+/bin/
+/obj/
+**/bin/
+/**/obj/
+
+# Visual Studio / VS Code
+.vs/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# NuGet packages
+packages/
+*.nupkg
+
+# Logs
+*.log
+
+# Ignore backend build artifacts
+/backend/bin/
+/backend/obj/
+
+# Optional IDEs
+.idea/
+*.sln.iml

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Car Dealer App</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    input, button { margin: 5px; padding: 5px; }
+    table { border-collapse: collapse; margin-top: 10px; }
+    th, td { border: 1px solid #ccc; padding: 8px; }
+  </style>
+</head>
+<body>
+
+<h1>🚗 Car Dealer App</h1>
+
+<button onclick="getCars()">Load Cars</button>
+
+<table id="carTable" style="display:none;">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Make</th>
+      <th>Model</th>
+      <th>Year</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<h3>Add New Car</h3>
+<input id="make" placeholder="Make">
+<input id="model" placeholder="Model">
+<input id="year" placeholder="Year" type="number">
+<button onclick="addCar()">Add Car</button>
+
+<script>
+const API = "http://localhost:5055"; // Change to your backend URL if different
+
+async function getCars() {
+  const res = await fetch(API + "/cars");
+  const data = await res.json();
+  const tbody = document.querySelector("#carTable tbody");
+  tbody.innerHTML = "";
+
+  data.forEach(car => {
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
+      <td>${car.id}</td>
+      <td><input value="${car.make}" id="make-${car.id}"></td>
+      <td><input value="${car.model}" id="model-${car.id}"></td>
+      <td><input type="number" value="${car.year}" id="year-${car.id}"></td>
+      <td>
+        <button onclick="updateCar(${car.id})">Update</button>
+        <button onclick="deleteCar(${car.id})">Delete</button>
+      </td>
+    `;
+    tbody.appendChild(row);
+  });
+
+  document.getElementById("carTable").style.display = "table";
+}
+
+async function addCar() {
+  const make = document.getElementById("make").value;
+  const model = document.getElementById("model").value;
+  const year = parseInt(document.getElementById("year").value);
+
+  await fetch(API + "/cars", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ make, model, year })
+  });
+
+  getCars();
+}
+
+async function updateCar(id) {
+  const make = document.getElementById(`make-${id}`).value;
+  const model = document.getElementById(`model-${id}`).value;
+  const year = parseInt(document.getElementById(`year-${id}`).value);
+
+  await fetch(`${API}/cars/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ make, model, year })
+  });
+
+  getCars();
+}
+
+async function deleteCar(id) {
+  await fetch(`${API}/cars/${id}`, { method: "DELETE" });
+  getCars();
+}
+</script>
+
+</body>
+</html>
