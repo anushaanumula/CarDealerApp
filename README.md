@@ -1,3 +1,4 @@
+backend
 check if u have dotnet installed
 git clone https://github.com/anushaanumula/CarDealerApp.git
 cd CarDealerApp
@@ -47,3 +48,21 @@ Body (JSON):
   "model": "Corolla",
   "year": 2021
 }
+
+
+
+frontend
+in new terminal. cd ../frontend
+
+Make sure backend is running (dotnet run)
+Open frontend/index.html in your browser
+Click Load Cars → displays cars
+Use Add / Update / Delete to test CRUD operations
+
+CarDealerApp/
+├── backend/          # .NET Web API
+│   ├── Program.cs    # API code and in-memory data
+│   └── backend.csproj
+│
+└── frontend/         # HTML + JS UI
+    └── index.html
