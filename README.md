@@ -1,4 +1,4 @@
-backend
+**BACKEND**
 check if u have dotnet installed
 git clone https://github.com/anushaanumula/CarDealerApp.git
 cd CarDealerApp
@@ -51,7 +51,7 @@ Body (JSON):
 
 
 
-frontend
+**FRONTEND**
 in new terminal. cd ../frontend
 
 Make sure backend is running (dotnet run)
